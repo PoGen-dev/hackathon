@@ -1,6 +1,6 @@
 import aiogram
 
-from .BotTemplate import bot
+from .BotTemplate import bot, Template
 
 class Activity: 
 
