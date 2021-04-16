@@ -1,6 +1,7 @@
 import aiogram
 
-from Source.BotTemplate import dispatcher
+from Package.Source.Main import dispatcher
+
 
 if __name__ == '__main__': 
     print('Start polling')

@@ -1,1 +1,0 @@
-from Source.BotTemplate import dispatcher

@@ -5,13 +5,10 @@ from .Settings import Settings
 
 
 bot = aiogram.Bot(token=Settings.TOKEN)
+print(1)
 dispatcher = aiogram.Dispatcher(bot, storage = memory.MemoryStorage())
-
+print(2)
 class Template: 
 
-    async def StartMessage(Message: aiogram.types.Message) -> None: 
-        """
-        """
-        print(1)
-        await bot.send_message(Message.chat.id, 'Hello')
+    pass
 
