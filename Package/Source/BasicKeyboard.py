@@ -2,7 +2,7 @@ Keyboard = []
 Subgroup = ['FileSystem']
 
 Text = {
-    'FileSystem': ['PDF', 'DOCX', 'CVG']
+    'FileSystem': ['PDF', 'DOCX', 'SVG']
 }
 
 for key in Subgroup:

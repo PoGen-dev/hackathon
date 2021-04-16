@@ -12,4 +12,4 @@ class Settings:
     #   {0: ('PDF', 'FileSystem'), 1: ('DOCX', 'FileSystem'), ...}
     Keyboard = {Keyboard.index(line): line for line in Keyboard}
     #   Template of File System
-    TemplateFileSystem = ['PDF', 'DOCX', 'CVG', 'Template']
+    TemplateFileSystem = ['PDF', 'DOCX', 'SVG', 'Template']
