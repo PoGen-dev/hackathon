@@ -80,7 +80,9 @@ Welcome to TelegramBotFastReports's documentation!
   
    - sphinx_rtd_theme
 
-Все пакеты, за исключением aiogram и sphinx_rtd_theme являются стандартными библиотеками.
+   - cryptography
+
+   Большая часть пакеты, кроме aiogram, sphinx_rtd_theme и cryptography являются стандартными библиотеками.
 
 Установка: 
 """""""""""""""

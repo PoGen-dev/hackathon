@@ -44,8 +44,9 @@ Repository for hackathon
 - os 
 - typing
 - sphinx_rtd_theme
+- cryptography
 
-Все пакеты, за исключением aiogram и sphinx_rtd_theme являются стандартными библиотеками.
+Большая часть пакеты, кроме aiogram, sphinx_rtd_theme и cryptography являются стандартными библиотеками.
 
 Установка: 
 
