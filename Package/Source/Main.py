@@ -13,6 +13,24 @@ class TelegramBot:
         """
         await Activity.StartMessage(Message)
 
+    @dispatcher.message_handler(commands = ['help'])
+    async def StartCommand(Message: aiogram.types.Message):
+        """
+        """
+        await Activity.StartMessage(Message)
+    
+    @dispatcher.message_handler(commands = ['status'])
+    async def StartCommand(Message: aiogram.types.Message):
+        """
+        """
+        await Activity.StartMessage(Message)
+
+    @dispatcher.message_handler(commands = ['rule'])
+    async def StartCommand(Message: aiogram.types.Message):
+        """
+        """
+        await Activity.StartMessage(Message)
+
     @dispatcher.message_handler(content_types = ['document'])
     async def take_file(Message: aiogram.types.Message):
         """

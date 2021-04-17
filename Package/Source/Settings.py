@@ -1,5 +1,7 @@
 from base64 import b64encode
+
 from .BasicKeyboard import Keyboard
+from .CryptoKey import DecryptFernet
 
 class Settings:
 
@@ -15,5 +17,5 @@ class Settings:
     #   Template of File System
     TemplateFileSystem = ['PDF', 'DOCX', 'SVG', 'Template']
     #   Init key for API
-    ApiKeyUtf8 = 'fi17tksbihkaq8qhuusnqgjb13fcrg8wybt1fmxp55akbkgu7tfy'
+    ApiKeyUtf8 = DecryptFernet()
     ApiKeyBase64 = b64encode(f"apikey:{ApiKeyUtf8}".encode()).decode()
