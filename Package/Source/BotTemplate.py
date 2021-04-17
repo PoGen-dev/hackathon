@@ -228,3 +228,35 @@ class Template:
         FileList = [File.replace('.fpx', '').replace('.frx', '') for File 
             in os.listdir(PathToDirectory)]
         return FileList
+
+    def CreateDictOfFiles(UserID: str, ListOfFiles: list) -> None: 
+        """
+        Create dict of files. In futures for creating text of message
+        to user. 
+
+        :param str UserID:
+        :param list ListOfFiles:
+        :return NoneType:
+        """
+        Settings.History[UserID] = {Index + 1: ListOfFiles[Index] for Index in 
+            len(ListOfFiles)}
+    
+    def PrepareTextHistory(UserID: str) -> str: 
+        """
+        Preparation text about all files which 
+        inside Template directory of user.
+
+        :param str UserID: 
+        :return str:
+        """
+        #   Copy global dict 
+        DictOfFiles = Settings.History[UserID].copy()
+        #   If dict isn't empty
+        if DictOfFiles:
+            Text = 'Введи номер файла, отчёт которого хочешь получить.\n\n'
+            #   key - number (type int)
+            #   value - text (type str) (name of file)
+            for key, value in DictOfFiles.items(): 
+                Text += f'{str(key)}. {value}\n'
+            return Text
+        return 'Ты ещё не отправлял мне файлы.'

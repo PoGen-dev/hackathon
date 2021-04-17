@@ -46,14 +46,9 @@ class Activity:
         Info = Template.PreparationBasicInfo(Message)
         #   If user use ReplyKeyboardButton with text 'Статус'
         if Info.get('Text').lower() == 'статус':
-            #   Preparation text
-            Text = Template.PrepareBotText(
-                Template.GetAllUsersArray(Info.get('UserID'))
-                )
-            #   Send message about status of all document
-            await bot.send_message(Info.get('UserID'), Text)
+            await Activity.ReactionOnStatusText(Info.get('UserID'))
         if Info.get('Text').lower() == 'история': 
-            pass
+            await Activity.ReactionOnHistoryText()
 
     async def GetDocument(Message: aiogram.types.Message) -> None: 
         """
@@ -88,10 +83,45 @@ class Activity:
                 'соответствует моим требованиям!\n\nПопробуй ещё раз отправить мне ' +
                 'файл, может в этот раз повезёт.')
         
+    async def ReactionOnStatusText(UserID: str) -> None: 
+        """
+        Reaction on ReplyKeyboardButton 'Статус'.
 
+        1. Preparation text.
+        2. Send message.
 
+        :param str UserID:
+        :return None:
+        """
+        #   Preparation text
+        Text = Template.PrepareBotText(
+            Template.GetAllUsersArray(UserID)
+            )
+        #   Send message about status of all document
+        await bot.send_message(UserID, Text)
 
+    async def ReactionOnHistoryText(UserID: str) -> None: 
+        """
+        Reaction on ReplyKeyboardButton 'История'.
 
+        1. Get list of files inside Template folder.
+        2. Create dict.
+        3. Preparation text.
+        4. Send message.
+        5. Active state
+
+        :param str UserID:
+        :return None:
+        """
+        #   Get list of files inside Template folder
+        FileList = Template.GetListOfFiles(UserID)
+        #   Create dict
+        Template.CreateDictOfFiles(UserID, FileList)
+        #   Preparation text
+        BotText = Template.PrepareTextHistory(UserID)
+        #   Send message
+        await bot.send_message(UserID, BotText)
+        #   Active state
 
 
 
