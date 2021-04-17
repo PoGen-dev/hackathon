@@ -1,5 +1,5 @@
 from base64 import b64encode
-
+from aiogram.dispatcher.filters.state import StatesGroup, State
 from .BasicKeyboard import Keyboard
 from .CryptoKey import DecryptFernet
 
@@ -27,3 +27,7 @@ class Settings:
     #           }   
     #       }
     History = {}
+
+class RegistrationState(StatesGroup): 
+
+    DocIndex = State()

@@ -1,6 +1,6 @@
 import aiogram
 
-from .Settings import Settings
+from .Settings import RegistrationState, Settings
 from .BotTemplate import dispatcher
 from .BotActivity import Activity
 
@@ -47,7 +47,13 @@ class TelegramBot:
         """
         await Activity.GetDocument(Message)
 
-        
+#   STATE
+
+    @dispatcher.message_handler(state = RegistrationState.DocIndex)
+    async def EnterDocIndex(Message: aiogram.types.Message):
+        """
+        """
+        await Activity.ReactionOnState(Message)
 
 
 
