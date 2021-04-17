@@ -24,7 +24,11 @@ class Activity:
         #   Bot send message
         await bot.send_message(Info.get('UserID'), 'Добро пожаловать.\n\nЯ помогу ' +
             'тебе составить отчёт, для этого тебе нужно всего лишь отправить мне ' +
-            'файл в формате .frx или .fpx.')
+            'файл в формате .frx или .fpx.',
+            reply_markup = Template.CreateKeyboardByInsert(
+                Template.UniteKeyboardBySubgroup(
+                    'AdditionalOptions', Settings.Keyboard.copy()), 
+                'Reply'))
     
     async def HelpMessage(Message: aiogram.types.Message) -> None: 
         """
@@ -177,11 +181,14 @@ class Activity:
             return None
         #   Set user id and index of document in the same place
         Template.ConnectUserDocument(Info.get('UserID'), int(Info.get('Text')))
-        await bot.send_message(Info.get('UserID'), 'Отлично!\nОсталось выбрать' \
-            ' формать файла, в которых хочешь видеть отчёт.',
+        BotMessage = await bot.send_message(Info.get('UserID'), 'Отлично!\nОсталось выбрать' \
+            ' формат файла, в котором хочешь видеть отчёт.',
             reply_markup = Template.CreateKeyboardByInsert(
                 Template.UniteKeyboardBySubgroup(
                     'FileSystem', Settings.Keyboard.copy()), 'Inline'))
+        #   Add message id and user id in the same place
+        Template.AddMessageIDToUser(Info.get('UserID'), BotMessage)
+        #   Finish state 
         await state.finish()
 
 

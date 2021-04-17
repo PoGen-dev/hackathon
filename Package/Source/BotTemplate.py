@@ -18,18 +18,28 @@ class Template:
         """
         Creat InlineKeyboardMarkup.
 
-        :param list Data: [[text, callback_data], ...],
+        :param list Data: [[callback_data, text], ...],
         :param str Option: choosen type of keyboard 
         :return [InlineKeyboardMarkup, ReplyKeyboardMarkup]:
         """
         #   Check type of data and parametr
         if isinstance(Data, list) and Option == 'Inline':
             #   Create object InlineKeyboardMarkup
-            Keyboard = aiogram.types.InlineKeyboardMarkup(resize_keyboard = True, row_width = 3)
+            Keyboard = aiogram.types.InlineKeyboardMarkup(resize_keyboard = True, row_width = 2)
             #   Recursively insert InlineKeyboardButton in InlineKeyboardMarkup
             for Line in Data:
                 #   Insert puds inside keyboard
                 Keyboard.insert(aiogram.types.InlineKeyboardButton(text = Line[1], callback_data = Line[0]))
+            #   Return InlineKeyboardMarkup
+            return Keyboard
+        #   Check type of data and parametr
+        if isinstance(Data, list) and Option == 'Reply':
+            #   Create object InlineKeyboardMarkup
+            Keyboard = aiogram.types.ReplyKeyboardMarkup(resize_keyboard = True, row_width = 2)
+            #   Recursively insert InlineKeyboardButton in InlineKeyboardMarkup
+            for Line in Data:
+                #   Insert puds inside keyboard
+                Keyboard.insert(aiogram.types.KeyboardButton(Line[1]))
             #   Return InlineKeyboardMarkup
             return Keyboard
 
@@ -64,7 +74,7 @@ class Template:
                 InfoDict['FileName'] = Message.document.file_name
                 InfoDict['FileID'] = Message.document.file_id
         if CallbackQuery: 
-            InfoDict['UserID'] = CallbackQuery.from_user.id
+            InfoDict['UserID'] = str(CallbackQuery.from_user.id)
             InfoDict['Code'] = int(CallbackQuery.data)
             InfoDict['TextButton'] = Settings.Keyboard.get(InfoDict['Code'])[0]
         return InfoDict
@@ -239,7 +249,7 @@ class Template:
         :return NoneType:
         """
         Settings.History[UserID] = {Index + 1: ListOfFiles[Index] for Index in 
-            len(ListOfFiles)}
+            range(len(ListOfFiles))}
     
     def PrepareTextHistory(UserID: str) -> str: 
         """
@@ -250,7 +260,7 @@ class Template:
         :return str:
         """
         #   Copy global dict 
-        DictOfFiles = Settings.History[UserID].copy()
+        DictOfFiles = Settings.History.get(UserID).copy()
         #   If dict isn't empty
         if DictOfFiles:
             Text = 'Введи номер файла, отчёт которого хочешь получить.\n\n'
@@ -278,7 +288,7 @@ class Template:
         :return str:
         """
         #   Copy global dict 
-        DictOfFiles = Settings.History[UserID].copy()
+        DictOfFiles = Settings.History.get(UserID).copy()
         #   Return name of file without suffix
         return DictOfFiles.get(Settings.UserWithDocument.get(UserID))
 
@@ -291,14 +301,27 @@ class Template:
         """
         #   Preparat basic info
         Info = Template.PreparationBasicInfo(CallbackQuery = CallbackQuery) 
+        #   Delete InlineKeyboard after the last message
+        await bot.edit_message_reply_markup(Info.get('UserID'), 
+            Settings.UserMessage.get(Info.get('UserID')), 
+            reply_markup = None)
         #   Make path to file
         PathToFile = ''.join([str(pathlib.Path(__file__).parents[2]), 
             '\\FileSystem\\', Info.get('UserID'), f'\\{Info.get("TextButton")}\\',
-            Template.GetNameOfDocument(Info.get("UserID")), Info.get("TextButton").lower()])
+            Template.GetNameOfDocument(Info.get("UserID")), '.', 
+            Info.get("TextButton").lower()])
         #   Send file
         with open(PathToFile, 'rb') as File:
             await bot.send_document(Info.get('UserID'), document = File)
 
+    def AddMessageIDToUser(UserID: str, BotMessage: aiogram.types.Message) -> None: 
+        """
+        Add message id and user id in the same place.
 
+        :param str UserID: 
+        :param aiogram.types.Message BotMessage:
+        :return NoneType:
+        """
+        Settings.UserMessage[UserID] = BotMessage.message_id
 
 

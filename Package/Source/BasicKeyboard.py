@@ -1,8 +1,9 @@
 Keyboard = []
-Subgroup = ['FileSystem']
+Subgroup = ['FileSystem', 'AdditionalOptions']
 
 Text = {
-    'FileSystem': ['PDF', 'DOCX', 'SVG']
+    'FileSystem': ['PDF', 'DOCX', 'SVG', 'XLSX'],
+    'AdditionalOptions': ['Статус', 'История']
 }
 
 for key in Subgroup:

@@ -16,7 +16,7 @@ class Settings:
     #   {0: ('PDF', 'FileSystem'), 1: ('DOCX', 'FileSystem'), ...}
     Keyboard = {Keyboard.index(line): line for line in Keyboard}
     #   Template of File System
-    TemplateFileSystem = ['PDF', 'DOCX', 'SVG', 'Template']
+    TemplateFileSystem = ['PDF', 'DOCX', 'SVG', 'Template', 'XLSX']
     #   Init key for API
     ApiKeyUtf8 = DecryptFernet()
     ApiKeyBase64 = b64encode(f"apikey:{ApiKeyUtf8}".encode()).decode()
@@ -31,6 +31,10 @@ class Settings:
     #   UserID: IndexOfDocument
     #   }
     UserWithDocument = {}
+    #   Structure {
+    #   UserID: MessageID
+    #   }
+    UserMessage = {}
 
 class RegistrationState(StatesGroup): 
 
