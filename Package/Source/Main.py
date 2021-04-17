@@ -12,3 +12,28 @@ class TelegramBot:
         """
         """
         await Activity.StartMessage(Message)
+
+    @dispatcher.message_handler(content_types = ['document'])
+    async def take_file(Message: aiogram.types.Message):
+        """
+        """
+        await Activity.GetDocument(Message)
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

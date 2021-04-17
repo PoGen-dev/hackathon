@@ -3,7 +3,7 @@ import functools
 
 class Decorator: 
 
-    def CommonDecorator(logger: logging.Logger, success: str = None, fail: str = None):
+    def CommonDecorator(logger: logging.Logger, success: str = None, fail: str = None) -> str:
         def Decor(func):
             @functools.wraps(func)
             def Wrapper(**kwargs): 
