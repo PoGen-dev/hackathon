@@ -27,6 +27,34 @@ class Activity:
             'повторяться, иначе я не смогу помочь тебе.\n2. Размер файла не должен ' +
             'превышать 20 Мб')
     
+    async def HelpMessage(Message: aiogram.types.Message) -> None: 
+        """
+        """
+
+    async def StatusMessage(Message: aiogram.types.Message) -> None: 
+        """
+        """
+    
+    async def RuleMessage(Message: aiogram.types.Message) -> None: 
+        """
+        """
+
+    async def ReplyMessage(Message: aiogram.types.Message) -> None: 
+        """
+        """
+        #   Preparat basic info
+        Info = Template.PreparationBasicInfo(Message)
+        #   If user use ReplyKeyboardButton with text 'Статус'
+        if Info.get('Text').lower() == 'статус':
+            #   Preparation text
+            Text = Template.PrepareBotText(
+                Template.GetAllUsersArray(Info.get('UserID'))
+                )
+            #   Send message about status of all document
+            await bot.send_message(Info.get('UserID'), Text)
+        if Info.get('Text').lower() == 'история': 
+            pass
+
     async def GetDocument(Message: aiogram.types.Message) -> None: 
         """
         Reaction on documents thrown off by user.

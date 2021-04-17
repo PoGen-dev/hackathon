@@ -1,6 +1,7 @@
 import aiogram
 import pathlib
 import urllib
+import os 
 
 from aiogram.contrib.fsm_storage import memory
 
@@ -134,7 +135,8 @@ class Template:
             UserID,
             NumberOfQueue,
             FileName,
-            FilePath
+            FilePath,
+            'Очередь'
             ])
 
     def GetNumberOfQueue() -> int: 
@@ -176,3 +178,52 @@ class Template:
         with open(PathToFile, 'rb') as File: 
             #   Get and return content 
             return File.read()
+
+    def ChangeStatus() -> None: 
+        """
+        Change status of the first array in queue on 'В работе'.
+
+        :return NoneType:
+        """
+        Settings.Queue[0][4] = 'В работе'
+
+    def GetAllUsersArray(UserID: str) -> list: 
+        """
+        Get all array with status depends on user.
+
+        :param str UserID: 
+        :return list:
+        """
+        #   Copy main queue
+        AllArray = Settings.Queue.copy()
+        #   If AllArray isn't empty, search array with user id 
+        if AllArray: return [Array for Array in AllArray if Array[0] == UserID]
+        return False
+
+    def PrepareBotText(Array: list) -> str: 
+        """
+        Depends on array choose text for bot sending.
+
+        :param list Array:
+        :return str:
+        """
+        if Array: 
+            Text = ''
+            for Line in Array:
+                Text += f'Файл: {Line[2]}:\nОчередь: {Line[1]}\nСтатус: {Line[4]}\n\n' \
+                        '----------'
+            return Text
+        return 'Очередь пустая!'
+
+    def GetListOfFiles(UserID: str) -> list: 
+        """
+        Get list with all file's names in FileSystem\\Template.
+
+        :param str UserID: 
+        :return list:
+        """
+        PathToDirectory = str(pathlib.Path(__file__).parents[2]) + '\\' \
+            'FileSystem\\' + UserID + '\\Template\\'
+        FileList = [File.replace('.fpx', '').replace('.frx', '') for File 
+            in os.listdir(PathToDirectory)]
+        return FileList
