@@ -2,6 +2,7 @@ import aiogram
 import pathlib
 import urllib
 import os 
+import typing
 
 from aiogram.contrib.fsm_storage import memory
 
@@ -187,7 +188,7 @@ class Template:
         """
         Settings.Queue[0][4] = 'В работе'
 
-    def GetAllUsersArray(UserID: str) -> list: 
+    def GetAllUsersArray(UserID: str) -> typing.Union[list, bool]: 
         """
         Get all array with status depends on user.
 
@@ -211,7 +212,7 @@ class Template:
             Text = ''
             for Line in Array:
                 Text += f'Файл: {Line[2]}:\nОчередь: {Line[1]}\nСтатус: {Line[4]}\n\n' \
-                        '----------'
+                        '----------\n\n'
             return Text
         return 'Очередь пустая!'
 
