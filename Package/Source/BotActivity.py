@@ -42,9 +42,21 @@ class Activity:
         #   Download file depends on user id 
         if await Template.DownloadDocument(Info.get('UserID'), Info.get('FileName'), 
                 Info.get('FileID')):
+            #   Send message about success download
             await bot.send_message(Info.get('UserID'), f'Файл {Info.get("FileName")}' +
                 ' успешно сохранён.')
-        else: await bot.send_message(Info.get('UserID'), 'Формат или размер файла не ' +
+            #   Add document in queue
+            Template.AddDocumentInQueue(
+                Info.get('UserID'), Template.GetNumberOfQueue(),
+                Info.get('FileName'), Template.MakePath(
+                    Info.get('UserID'), 'Template', Info.get('FileName'))
+                )
+            #   send message about success append to queue
+            await bot.send_message(Info.get('UserID'), f'Файл {Info.get("FileName")}' + 
+                ' успешно добавлен в очередь.')
+        else:
+            #   Send message about fail 
+            await bot.send_message(Info.get('UserID'), 'Формат или размер файла не ' +
                 'соответствует моим требованиям!\n\nПопробуй ещё раз отправить мне ' +
                 'файл, может в этот раз повезёт.')
         

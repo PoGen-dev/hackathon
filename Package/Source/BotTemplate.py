@@ -40,7 +40,7 @@ class Template:
         :return list: [[0, 'PDF'], [1, 'DOCX'], ...]
         """
         #   Make two-dimensional array
-        #   Recursively making a lot of smal array depens on Subgroup
+        #   Recursively making a lot of small array depens on Subgroup
         #   key - callback_data (type - int)
         #   value[0] - text (type - str)
         return [[key, value[0]] for key, value in AllKeyboard.items() if value[1] == Subgroup] 
@@ -119,3 +119,60 @@ class Template:
             except:
                 pass
         return False
+
+    def AddDocumentInQueue(UserID: str, NumberOfQueue: int, FileName: str, FilePath: str) -> None: 
+        """
+        Add document in queue.
+
+        :param str UserID:
+        :param int NumberOfQueue: 
+        :param str FileName: 
+        :param str FilePath:
+        :return NoneType:
+        """
+        Settings.Queue.append([
+            UserID,
+            NumberOfQueue,
+            FileName,
+            FilePath
+            ])
+
+    def GetNumberOfQueue() -> int: 
+        """
+        Get the last number of queue.
+
+        :return int:
+        """
+        #   Try to getting first array in queue
+        try: Settings.Queue[0]
+        #   If queue is empty return default number of queue
+        except IndexError: return 1
+        #   If queue is not empty, return the last number
+        #   of queue + 1 
+        return Settings.Queue[-1][1] + 1
+
+    def MakePath(UserID: str, FolderName: str, FileName: str) -> str: 
+        """
+        Make path to file inside FileSystem depends on user id 
+        and folder name.
+
+        :param str UserID: 
+        :param str FolderName: 
+        :param str FileName:
+        :return str PathToFile:
+        """
+        PathToFile = ''.join([str(pathlib.Path(__file__).parents[2]), '\\FileSystem\\',
+            UserID, '\\', FolderName, '\\', FileName]) 
+        return PathToFile
+
+    def ReadFile(PathToFile: str) -> bytes: 
+        """
+        Read file in rb mode.
+
+        :param str PathToFile: 
+        :return bytes: 
+        """
+        #   Open file in rb mode
+        with open(PathToFile, 'rb') as File: 
+            #   Get and return content 
+            return File.read()
