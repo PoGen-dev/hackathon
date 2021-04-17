@@ -37,7 +37,8 @@
 
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Заголовок" href="empty.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -82,12 +83,11 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Welcome to TelegramBotFastReports’s documentation!</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="empty.html">Заголовок</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -155,16 +155,89 @@
             
   <div class="section" id="welcome-to-telegrambotfastreports-s-documentation">
 <h1>Welcome to TelegramBotFastReports’s documentation!<a class="headerlink" href="#welcome-to-telegrambotfastreports-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Реализовання функциональность<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+<li><p>Формирование Inline клавиатуры.</p></li>
+<li><p>Удаление Inline клавиатуры для избежания конфликтных ситуаций.</p></li>
+<li><p>Формирование Reply клавиатуры.</p></li>
+<li><p>Формирование собственной системы хранения всех input и output данных.</p></li>
+<li><p>Функционал взаимодействия с пользователям по средствам состояний (State)</p></li>
+<li><p>Криптографическая защита уникальных величин (например, ключ к API для FastReport Cloud)</p></li>
+<li><p>Возможность просмотра статусов по всем отчётам.</p></li>
+<li><p>Возможность скачать отчёт в удобной для пользователя форме вне зависимости от времени (Пользователь может через неделю зайти в бота, запросить историю отчётов и выбрать отчёт, который ему нужен + выбрать формат отчёт и скачать его)</p></li>
+<li><p>Асинхронность работы бота (быстрая обработка запросов).</p></li>
+<li><p>Запуск бота двойным кликом по Run.cmd.</p></li>
+<li><p>Система проверок препятствующая возникновению конфликтных ситуаций</p></li>
 </ul>
+</div>
+<div class="section" id="id2">
+<h2>Особенность проекта в следующем:<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Независимость от базы данных за счёт динамического получения данных.</p></li>
+<li><p>Независимость от серверного хранения данных (отчётов) в FastReport Cloud.</p></li>
+<li><p>Многообразие взаимодействия бота с пользователем.</p></li>
+<li><p>Наличие полного описания кода + наличие описания на html благодаря автодокументации sphinx (файл запуска можно найти по Docssphinxbuildhtmlindex.html)</p></li>
+<li><p>Простота в эксплуатации бота.</p></li>
+<li><p>простота в реализации обновлений и добавлении взаимодействий с другими системами/сервисами (внутри компании, так и вне компании).</p></li>
+<li><p>Асинхронность работы бота (быстрая обработка запросов).</p></li>
+<li><p>Простота в разрорачивании и запуске (запуск происходит в два клика по Run.cmd)</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>Основной стек технологий:<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Python</p></li>
+<li><p>GitHub</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>Среда запуска:<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>развёртывание бота производится на windows 10.</p></li>
+<li><p>требуется установлнный язык программирования Python (версия 3.5 +)</p></li>
+<li><p>требуется установленные пакеты для работы бота:</p>
+<ul class="simple">
+<li><p>aiogram</p></li>
+<li><p>base64</p></li>
+<li><p>pathlib</p></li>
+<li><p>urllib</p></li>
+<li><p>os</p></li>
+<li><p>typing</p></li>
+<li><p>sphinx_rtd_theme</p></li>
+</ul>
+</li>
+</ol>
+<p>Все пакеты, за исключением aiogram и sphinx_rtd_theme являются стандартными библиотеками.</p>
+</div>
+<div class="section" id="id5">
+<h2>Установка:<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Установка пакета aiogram:</p></li>
+</ol>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">aiogram</span>
+</pre></div>
+</td></tr></table></div>
+<ol class="arabic simple" start="2">
+<li><p>Установка пакета sphinx_rtd_theme:</p></li>
+</ol>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sphinx_rtd_theme</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id6">
+<h2>Разработчики:<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Погуляй Геннадий RPA</p></li>
+<li><p>Халилаева Эмине</p></li>
+</ol>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="empty.html">Заголовок</a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -172,6 +245,9 @@
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="empty.html" class="btn btn-neutral float-right" title="Заголовок" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
