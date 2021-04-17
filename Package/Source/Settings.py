@@ -27,6 +27,10 @@ class Settings:
     #           }   
     #       }
     History = {}
+    #   Structure {
+    #   UserID: IndexOfDocument
+    #   }
+    UserWithDocument = {}
 
 class RegistrationState(StatesGroup): 
 

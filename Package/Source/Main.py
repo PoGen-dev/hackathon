@@ -1,7 +1,7 @@
 import aiogram
 
 from .Settings import RegistrationState, Settings
-from .BotTemplate import dispatcher
+from .BotTemplate import Template, dispatcher
 from .BotActivity import Activity
 
 
@@ -50,15 +50,23 @@ class TelegramBot:
 #   STATE
 
     @dispatcher.message_handler(state = RegistrationState.DocIndex)
-    async def EnterDocIndex(Message: aiogram.types.Message):
+    async def EnterDocIndex(Message: aiogram.types.Message, state: aiogram.dispatcher.storage.FSMContext):
         """
         """
-        await Activity.ReactionOnState(Message)
+        await Activity.ReactionOnState(Message, state)
 
+#   CALLBACK QUERY
 
-
-
-
+    @dispatcher.callback_query_handler(lambda Message: True)
+    async def ProcessCallbackQuery(CallbackQuery: aiogram.types.callback_query.CallbackQuery):
+        """
+        """
+        Code = int(CallbackQuery.data)
+        ActivityDict = {
+            'FileSystem': Template.SendDocument
+            }
+        Func = ActivityDict.get(Settings.Keyboard[Code][1])
+        await Func(CallbackQuery)
 
 
 

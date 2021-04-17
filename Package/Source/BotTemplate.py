@@ -260,3 +260,45 @@ class Template:
                 Text += f'{str(key)}. {value}\n'
             return Text
         return 'Ты ещё не отправлял мне файлы.'
+
+    def ConnectUserDocument(UserID: str, Index: int) -> None: 
+        """
+        Set user id with index of document in the same place. 
+
+        :param str UserID:
+        :param int Index:
+        """
+        Settings.UserWithDocument[UserID] = Index
+
+    def GetNameOfDocument(UserID: str) -> str:
+        """
+        Get name of document depends on chosen index.
+
+        :param str UserID: 
+        :return str:
+        """
+        #   Copy global dict 
+        DictOfFiles = Settings.History[UserID].copy()
+        #   Return name of file without suffix
+        return DictOfFiles.get(Settings.UserWithDocument.get(UserID))
+
+    async def SendDocument(CallbackQuery: aiogram.types.callback_query.CallbackQuery) -> None: 
+        """
+        Send document with chosen type of document.
+
+        :param aiogram.types.callback_query.CallbackQuery CallbackQuery:
+        :return NoneType:
+        """
+        #   Preparat basic info
+        Info = Template.PreparationBasicInfo(CallbackQuery = CallbackQuery) 
+        #   Make path to file
+        PathToFile = ''.join([str(pathlib.Path(__file__).parents[2]), 
+            '\\FileSystem\\', Info.get('UserID'), f'\\{Info.get("TextButton")}\\',
+            Template.GetNameOfDocument(Info.get("UserID")), Info.get("TextButton").lower()])
+        #   Send file
+        with open(PathToFile, 'rb') as File:
+            await bot.send_document(Info.get('UserID'), document = File)
+
+
+
+

@@ -1,7 +1,8 @@
 import aiogram
 
 from .BotTemplate import bot, Template
-from .Settings import RegistrationState
+from .Settings import RegistrationState, Settings
+from .BotChecks import Checks
 
 class Activity: 
 
@@ -151,10 +152,38 @@ class Activity:
         #   Active state
         await RegistrationState.DocIndex.set()
 
-    async def ReactionOnState(Message: aiogram.types.Message) -> None:
+    async def ReactionOnState(Message: aiogram.types.Message, 
+        state: aiogram.dispatcher.storage.FSMContext) -> None:
         """
+        Reaction on state - DocIndex.
+
+        1. Check type of text.
+        2. Check range.
+        3. Send file.
+
+        :param aiogram.types.Message Message:
+        :return NoneType:
         """
-        
+        #   Preparat basic info
+        Info = Template.PreparationBasicInfo(Message) 
+        #   Check type of text
+        if not Checks.CheckTypeOfIndexDocument(Info.get('Text')):
+            await bot.send_message(Info.get('UserID'), 'Номер документы должен' \
+                ' состоять из цифр. Например, 1.\nПопробуй ещё раз.')
+            return None
+        if not Checks.CheckRangeOfDocument(Info.get('UserID'), int(Info.get('Text'))): 
+            await bot.send_message(Info.get('UserID'), 'Нет такого номера документа!' \
+                '\nПопробуй ещё раз.')
+            return None
+        #   Set user id and index of document in the same place
+        Template.ConnectUserDocument(Info.get('UserID'), int(Info.get('Text')))
+        await bot.send_message(Info.get('UserID'), 'Отлично!\nОсталось выбрать' \
+            ' формать файла, в которых хочешь видеть отчёт.',
+            reply_markup = Template.CreateKeyboardByInsert(
+                Template.UniteKeyboardBySubgroup(
+                    'FileSystem', Settings.Keyboard.copy()), 'Inline'))
+        await state.finish()
+
 
 
 
