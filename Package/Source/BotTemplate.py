@@ -5,7 +5,7 @@ import urllib
 from aiogram.contrib.fsm_storage import memory
 
 from .Settings import Settings
-
+from .BotChecks import Checks
 
 bot = aiogram.Bot(token=Settings.TOKEN)
 dispatcher = aiogram.Dispatcher(bot, storage = memory.MemoryStorage())
@@ -106,7 +106,7 @@ class Template:
         :param str FileID: 
         :return bool:
         """
-        if True:
+        if Checks.CheckTypeDocument(FileName):
             try:
                 #   get file info
                 FileInfo = await bot.get_file(FileID)
