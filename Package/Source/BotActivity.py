@@ -22,9 +22,10 @@ class Activity:
         #   Create default structure in FileSystem
         Template.CreateDefaultFileSystem(Info.get('UserID'))
         #   Bot send message
-        await bot.send_message(Info.get('UserID'), 'Добро пожаловать.\n\nЯ помогу ' +
+        await bot.send_message(Info.get('UserID'), 'Добро пожаловать.\nЯ помогу ' +
             'тебе составить отчёт, для этого тебе нужно всего лишь отправить мне ' +
-            'файл в формате .frx или .fpx.',
+            'файл в формате .frx или .fpx.\nИспользуй /help, чтобы узнать ' + 
+            'подробности взаимодействия со мной и мои возможности.',
             reply_markup = Template.CreateKeyboardByInsert(
                 Template.UniteKeyboardBySubgroup(
                     'AdditionalOptions', Settings.Keyboard.copy()), 
@@ -32,7 +33,22 @@ class Activity:
     
     async def HelpMessage(Message: aiogram.types.Message) -> None: 
         """
+        Reaction to command '/status'.
+
+        :param aiogram.types.Message Message: 
+        :return NoneType:
         """
+        #   Preparat basic info
+        Info = Template.PreparationBasicInfo(Message)
+        #   Bot send message 
+        await bot.send_message(Info.get('UserID'), 
+            'Краткое описание команд:\n\n1. /start - запуск взаимодействия со мной.\n' + 
+            '2. /status - просмотр статусов всех отчётов, которые ещё не были ' + 
+            'сформированы.\n3. /rule - ознакомление с правилами отправки файлов.\n\n' + 
+            'Как я работаю?\n\n1. Ты отправляешь мне файл, придерживаясь всех правил.\n' + 
+            '2. Я его отправляю на сервер для дальнейшего экспортирования в отчёт и ' + 
+            'конвертирование в нужный формат.\n3. Я отправлю тебе отчёт в формате ' +
+            '.pdf, как только он будет готов.')
 
     async def StatusMessage(Message: aiogram.types.Message) -> None: 
         """
@@ -48,7 +64,7 @@ class Activity:
     
     async def RuleMessage(Message: aiogram.types.Message) -> None: 
         """
-        Reaction to command '/status'.
+        Reaction to command '/rule'.
 
         :param aiogram.types.Message Message: 
         :return NoneType:
@@ -56,7 +72,7 @@ class Activity:
         #   Preparat basic info
         Info = Template.PreparationBasicInfo(Message)
         #   Send message with rule
-        await bot.send_message(Info.get('UserID'), 'Правила работы со мной:\n\n' +
+        await bot.send_message(Info.get('UserID'), 'Правила отправки файлов:\n\n' +
             '1. Названия файлов не должны повторяться, иначе я не смогу помочь ' + 
             'тебе.\n2. Размер файла не должен превышать 20 Мб.\n3. Файлы должны' +
             ' иметь 2 вида расширений, а именно .fpx или .frx')
