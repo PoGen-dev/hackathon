@@ -68,6 +68,12 @@ Welcome to TelegramBotFastReports's documentation!
 
    - aiogram 
 
+   - requests
+
+   - time
+
+   - asyncio
+
    - base64
   
    - pathlib
@@ -82,7 +88,7 @@ Welcome to TelegramBotFastReports's documentation!
 
    - cryptography
 
-   Большая часть пакеты, кроме aiogram, sphinx_rtd_theme и cryptography являются стандартными библиотеками.
+   Большая часть пакетов, кроме aiogram, sphinx_rtd_theme и cryptography являются стандартными библиотеками.
 
 Установка: 
 """""""""""""""
@@ -100,6 +106,14 @@ Welcome to TelegramBotFastReports's documentation!
   :linenos:
    
   pip install sphinx_rtd_theme
+
+
+3. Установка пакета cryptography: 
+
+.. code-block:: python
+   :linenos:
+   
+   pip install cryptography
 
 Разработчики: 
 """""""""""""""

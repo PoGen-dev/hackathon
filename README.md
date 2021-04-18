@@ -38,15 +38,18 @@ Repository for hackathon
 3. требуется установленные пакеты для работы бота: 
 
 - aiogram 
+- requests
+- time
 - base64
 - pathlib
 - urllib
 - os 
 - typing
+- asyncio
 - sphinx_rtd_theme
 - cryptography
 
-Большая часть пакеты, кроме aiogram, sphinx_rtd_theme и cryptography являются стандартными библиотеками.
+Большая часть пакетов, кроме aiogram, sphinx_rtd_theme и cryptography являются стандартными библиотеками.
 
 Установка: 
 
@@ -57,6 +60,10 @@ pip install aiogram
 2. Установка пакета sphinx_rtd_theme: 
 
 pip install sphinx_rtd_theme
+
+3. Установка пакета cryptography:
+
+pip install cryptography
 
 Разработчики: 
 

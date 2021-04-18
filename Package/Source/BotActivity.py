@@ -3,7 +3,6 @@ import aiogram
 from .BotTemplate import bot, Template
 from .Settings import RegistrationState, Settings
 from .BotChecks import Checks
-from .Builder import Builder
 
 class Activity: 
 

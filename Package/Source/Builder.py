@@ -1,8 +1,6 @@
 import requests
 from base64 import b64encode
 from .GetRootFolder import GetRootFolder
-import json
-import os
 from time import sleep
 
 class Builder:
