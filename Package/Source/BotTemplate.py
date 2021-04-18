@@ -3,11 +3,14 @@ import pathlib
 import urllib
 import os 
 import typing
+import asyncio
+import time 
 
 from aiogram.contrib.fsm_storage import memory
 
 from .Settings import Settings
 from .BotChecks import Checks
+from .Builder import Builder
 
 bot = aiogram.Bot(token=Settings.TOKEN)
 dispatcher = aiogram.Dispatcher(bot, storage = memory.MemoryStorage())
@@ -324,4 +327,61 @@ class Template:
         """
         Settings.UserMessage[UserID] = BotMessage.message_id
 
+    def DeleteLineInQueue() -> None: 
+        """
+        """
+        Settings.Queue.remove(Settings.Queue[0])
+
+    def CreatingTarget():
+        """
+        """
+        #   Make object AbstractEventLoop
+        NewLoop = asyncio.new_event_loop()
+        #   Run async
+        NewLoop.run_until_complete(Template.CheckingQueue())
+
+    async def CheckingQueue():
+        """
+        """
+        while True:
+            time.sleep(2) 
+            Queue = Settings.Queue.copy()
+            #   If Queue isn't empty
+            if Queue: 
+                #   If status of document is 'Очередь'
+                if Queue[0][4] == 'Очередь': 
+                    #   Change status to 'В работе'
+                    Template.ChangeStatus()
+                    #   Get content in file
+                    with open(Queue[0][3], 'r') as File: Content = File.read()
+                    await Template.UploadFile(Queue, Content)
+                    FilePath = ''.join([str(pathlib.Path(__file__).parents[2]), '\\FileSystem\\',
+                        Queue[0][0], f'\\PDF\\{Queue[0][2]}.pdf'])
+                    await Template.DownloadFile(Queue, FilePath)
+                    #   Delete line in queue
+                    Template.DeleteLineInQueue()
+                    #   Read document
+                    with open(FilePath, 'rb') as File:
+                        #   Send document to user
+                        await bot.send_document(Queue[0][0], document = File)
+
+    async def UploadFile(Queue, Content): 
+        """
+        """
+        try: 
+            #   Upload file in service
+            Builder.Upload(Queue[0][2], Queue[0][0], Content)
+        except: 
+            await bot.send_message(Queue[0][0],
+            'Возникла ошибка при загрузке файла на сервис!')
+
+    async def DownloadFile(Queue, FilePath): 
+        """
+        """
+        try:
+            #   Download file
+            Builder.Download(Builder.ExportReport(Queue[0][2]), FilePath)
+        except: 
+            await bot.send_message(Queue[0][0],
+            'Возникла ошибка при скачивании файла из сервиса!')
 
