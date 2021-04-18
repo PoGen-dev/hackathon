@@ -6,7 +6,7 @@ from .CryptoKey import DecryptFernet
 class Settings:
 
     #   Bot's token
-    TOKEN = '1732186544:AAGF3_ZPKCTO2ktbTgJnzkFqrmYMGoeIdSc'
+    TOKEN = '1573602297:AAERBgSxHA1MYod7MJQdmPc-h2U1ZDifwys'
     #   Queue of files in work
     #   Structure [
     #       [UserID, NumberOfQueue, FileName, FilePath],
