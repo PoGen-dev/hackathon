@@ -225,7 +225,7 @@ class Template:
             Text = ''
             for Line in Array:
                 Text += f'Файл: {Line[2]}:\nОчередь: {Line[1]}\nСтатус: {Line[4]}\n\n' \
-                        '----------\n\n'
+                        '----------------------------------------\n\n'
             return Text
         return 'Очередь пустая!'
 
@@ -340,11 +340,19 @@ class Template:
         #   Run async
         NewLoop.run_until_complete(Template.CheckingQueue())
 
+    def LowweringOfQueue(): 
+        """
+        """
+        Queue = Settings.Queue.copy()
+        for Line in Queue: 
+            Line[1] = Line[1] - 1 
+        Settings.Queue = Queue
+
     async def CheckingQueue():
         """
         """
+        telebot = aiogram.Bot(token=Settings.TOKEN)
         while True:
-            time.sleep(2) 
             Queue = Settings.Queue.copy()
             #   If Queue isn't empty
             if Queue: 
@@ -354,34 +362,45 @@ class Template:
                     Template.ChangeStatus()
                     #   Get content in file
                     with open(Queue[0][3], 'r') as File: Content = File.read()
-                    await Template.UploadFile(Queue, Content)
+                    await Template.UploadFile(Queue, Content, telebot)
+                    time.sleep(1)
                     FilePath = ''.join([str(pathlib.Path(__file__).parents[2]), '\\FileSystem\\',
-                        Queue[0][0], f'\\PDF\\{Queue[0][2]}.pdf'])
-                    await Template.DownloadFile(Queue, FilePath)
+                        Queue[0][0], f'\\PDF\\{Queue[0][2][:-4]}.pdf'])
+                    await Template.DownloadFile(Queue, FilePath, telebot)
+                    time.sleep(1)
                     #   Delete line in queue
                     Template.DeleteLineInQueue()
+                    time.sleep(1)
+                    #   Lowwering of queue
+                    Template.LowweringOfQueue()
                     #   Read document
                     with open(FilePath, 'rb') as File:
                         #   Send document to user
-                        await bot.send_document(Queue[0][0], document = File)
+                        await telebot.send_document(Queue[0][0], document = File)
+            time.sleep(2) 
 
-    async def UploadFile(Queue, Content): 
+    async def UploadFile(Queue, Content, telebot): 
         """
         """
         try: 
             #   Upload file in service
             Builder.Upload(Queue[0][2], Queue[0][0], Content)
         except: 
-            await bot.send_message(Queue[0][0],
+            await telebot.send_message(Queue[0][0],
             'Возникла ошибка при загрузке файла на сервис!')
 
-    async def DownloadFile(Queue, FilePath): 
+    async def DownloadFile(Queue, FilePath, telebot): 
         """
         """
         try:
             #   Download file
-            Builder.Download(Builder.ExportReport(Queue[0][2]), FilePath)
+            Builder.Download(Builder.ExportReport(Queue[0][2], ), FilePath)
+            ListOfFormat = ['Xlsx', 'Docx', 'Svg']
+            for Format in ListOfFormat:
+                #   Download file
+                Builder.Download(Builder.ExportReport(Queue[0][2], Format), 
+                    FilePath.replace('PDF', Format.upper()).replace('pdf', Format.lower()))
         except: 
-            await bot.send_message(Queue[0][0],
+            await telebot.send_message(Queue[0][0],
             'Возникла ошибка при скачивании файла из сервиса!')
 

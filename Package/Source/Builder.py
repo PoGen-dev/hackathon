@@ -51,20 +51,20 @@ class Builder:
                                            json=ReportData)
 
         if UploadFileResponse.status_code == 200:
-            FileStoragePath = "D:\\Python\\test\\test\\dict.txt"
+            # FileStoragePath = "D:\\Python\\test\\test\\dict.txt"
 
-            if not os.path.exists(FileStoragePath):
-                NewFileStorage = open(FileStoragePath, "w")
-                json.dump({}, NewFileStorage)
-                NewFileStorage.close()
+            # if not os.path.exists(FileStoragePath):
+            #     NewFileStorage = open(FileStoragePath, "w")
+            #     json.dump({}, NewFileStorage)
+            #     NewFileStorage.close()
 
-            with open(FileStoragePath, "r") as LoadFile:
-                FileStorage = json.load(LoadFile)
+            # with open(FileStoragePath, "r") as LoadFile:
+            #     FileStorage = json.load(LoadFile)
 
-            FileStorage[UploadFileResponse.json()['id']] = UserId
+            # FileStorage[UploadFileResponse.json()['id']] = UserId
 
-            with open(FileStoragePath, "w") as DumpFile:
-                json.dump(FileStorage, DumpFile)
+            # with open(FileStoragePath, "w") as DumpFile:
+            #     json.dump(FileStorage, DumpFile)
 
             return UploadFileResponse.json()['id']
 
@@ -109,12 +109,12 @@ class Builder:
     def GetExportFolder():
         return GetRootFolder.GetFolderId("https://fastreport.cloud/api/rp/v1/Exports/Root")
 
-    def ExportReport(Filename):
+    def ExportReport(Filename, Format = 'Pdf'):
         ExportLink = f"https://fastreport.cloud/api/rp/v1/Reports/File/{Builder.GetRootFolderTemplates()}/Export"
         OutputData = {
             "filename": Filename,
             "folderId": Builder.GetExportFolder(),
-            "outputFormat": "Pdf"
+            "outputFormat": Format
         }
         ExportResponse = requests.post(url=ExportLink, headers=GetRootFolder.ReportHeaders, json=OutputData)
         return ExportResponse.json()['id']
