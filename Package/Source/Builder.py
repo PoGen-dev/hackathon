@@ -114,7 +114,7 @@ class Builder:
         OutputData = {
             "filename": Filename,
             "folderId": Builder.GetExportFolder(),
-            "outputFormat": Format
+            "format": Format
         }
         ExportResponse = requests.post(url=ExportLink, headers=GetRootFolder.ReportHeaders, json=OutputData)
         return ExportResponse.json()['id']

@@ -23,9 +23,9 @@ class Activity:
         #   Create default structure in FileSystem
         Template.CreateDefaultFileSystem(Info.get('UserID'))
         #   Bot send message
-        await bot.send_message(Info.get('UserID'), 'Добро пожаловать.\nЯ помогу ' +
+        await bot.send_message(Info.get('UserID'), 'Добро пожаловать.\n\nЯ помогу ' +
             'тебе составить отчёт, для этого тебе нужно всего лишь отправить мне ' +
-            'файл в формате .frx или .fpx.\nИспользуй /help, чтобы узнать ' + 
+            'файл в формате .frx или .fpx.\n\nИспользуй /help, чтобы узнать ' + 
             'подробности взаимодействия со мной и мои возможности.',
             reply_markup = Template.CreateKeyboardByInsert(
                 Template.UniteKeyboardBySubgroup(

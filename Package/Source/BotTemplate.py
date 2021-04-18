@@ -395,7 +395,7 @@ class Template:
         try:
             #   Download file
             Builder.Download(Builder.ExportReport(Queue[0][2], ), FilePath)
-            ListOfFormat = ['Xlsx', 'Docx', 'Svg']
+            ListOfFormat = ['xlsx', 'Docx', 'SVG']
             for Format in ListOfFormat:
                 #   Download file
                 Builder.Download(Builder.ExportReport(Queue[0][2], Format), 
